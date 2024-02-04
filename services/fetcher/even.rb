@@ -2,13 +2,6 @@ require_relative 'base'
 
 module Fetcher
   class Even < Base
-    def initialize(limit)
-      @limit = limit
-    end
-    def self.call(limit)
-      new(limit).call
-    end
-
     def call
       index = 2
       todos = []
@@ -20,9 +13,5 @@ module Fetcher
 
       todos.compact
     end
-
-    private
-
-    attr_accessor :limit
   end
 end

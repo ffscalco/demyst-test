@@ -18,7 +18,7 @@ module Fetcher
         index += 2
       end
 
-      todos
+      todos.compact
     end
 
     private

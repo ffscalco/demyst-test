@@ -17,7 +17,7 @@ module Fetcher
     def batch_call
       indexes = (2..).step(2).take(limit)
 
-      fetch_batch_todos(indexes).compact
+      fetch_batch_todos(indexes)
     end
   end
 end

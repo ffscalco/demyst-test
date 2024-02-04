@@ -13,5 +13,11 @@ module Fetcher
 
       todos.compact
     end
+
+    def batch_call
+      indexes = (2..).step(2).take(limit)
+
+      fetch_batch_todos(indexes).compact
+    end
   end
 end

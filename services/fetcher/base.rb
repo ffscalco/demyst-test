@@ -22,8 +22,29 @@ module Fetcher
       nil
     end
 
+    def fetch_batch_todos(indexes)
+      uri = URI(BASE_URL)
+      query_params = indexes.map { |index| "id=#{index}" }.join('&')
+      uri.query = query_params
+
+      response = Net::HTTP.get_response(uri)
+
+      if valid_response_status?(response)
+        JSON.parse(response.body).map { |todo_data| Todo.from_json(todo_data.to_json) unless todo_data['id'].nil? }
+      else
+        []
+      end
+
+    rescue URI::InvalidURIError, Net::HTTPError
+      nil
+    end
+
     def valid_response?(response)
-      response.is_a?(Net::HTTPSuccess) && response.body.include?('id')
+      valid_response_status?(response) && response.body.include?('id')
+    end
+
+    def valid_response_status?(response)
+      response.is_a?(Net::HTTPSuccess)
     end
   end
 end
